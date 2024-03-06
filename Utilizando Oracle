@@ -1,0 +1,53 @@
+''Utilizando Oracle"
+aula 1:
+show user
+-criando os objetos do esquema loja
+create table tb_clientes( 
+id_cliente integer, 
+nome varchar2(10) not null, 
+sobrenome varchar2(10) not null,
+dt_nascimento date, 
+telefone varchar2(12), 
+fg_ativo integer, 
+constraint pk_tb_clientes_id_cliente primary key(id_cliente) );
+create table tb_tipos_produtos( id_tipo_produto integer,
+nm_tipo_produto varchar2(10) not null,
+fg_ativo integer,
+constraint pk_tb_tipos_produtos_id_tipo_produto primary key (id_tipo_produto) );
+create table tb_produtos(
+id_produto integer, 
+id_tipo_produto integer,
+nm_produto varchar2(30) NOT NULL,
+ds_produto varchar2(50), 
+preco  number(5,2), 
+fg_ativo integer, 
+constraint pk_tb_produtos_id_produto primary key (id_produto), 
+constraint fk_tb_produtos_id_tipo_produto foreign key (id_tipo_produto)
+references tb_tipos_produtos(id_tipo_produto) );
+create table tb_compras(
+id_produto integer,
+id_cliente integer, 
+quantidade integer, 
+fg_ativo integer,
+constraint fk_tb_compras_id_produto foreign key(id_produto)
+references tb_produtos(id_produto),
+constraint fk_tb_compras_id_cliente foreign key(id_cliente) 
+references tb_clientes(id_cliente),
+constraint pk_tb_compras_id_produto_id_cliente primary key (id_produto , id_cliente) );
+create table tb_funcionarios( 
+id_funcionario integer,
+id_gerente integer, 
+nome VARCHAR2(10) not null,
+sobrenome varchar2(10) not null,
+cargo varchar(20),
+salario number(8,2), 
+fg_ativo integer, 
+constraint pk_tb_funcionario_id_func primary key(id_funcionario),
+constraint fk_tb_funcionario_id_gerente foreign key(id_gerente)
+references tb_funcionarios(id_funcionario) );
+create table tb_grades_salarios( 
+id_salario integer, 
+base_salario number(8,2),
+teto_salario number(8,2),
+fg_ativo integer, 
+constraint pk_tb_grades_salarios_id_salario primary key (id_salario) );
